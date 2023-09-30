@@ -1,11 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import * as mongoose from 'mongoose';
 import * as bcrypt from 'bcrypt';
+import * as mongoose from 'mongoose';
 import { Roles } from '../consts/roles';
 
 export interface HookNextFunction {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (error?: Error): any
+  (error?: Error): any;
 }
 
 export type UserDocument = mongoose.HydratedDocument<User>;
@@ -18,10 +18,10 @@ export class User {
   @Prop({ required: true })
   password: string;
 
-  @Prop({ required: true, unique:true })
+  @Prop({ required: true, unique: true })
   email: string;
 
-  @Prop({ unique:true })
+  @Prop({ unique: true })
   id: string;
 
   @Prop()
@@ -30,22 +30,22 @@ export class User {
   @Prop({ type: [String], enum: Object.values(Roles), required: true })
   role: Roles[];
 
-  @Prop({required: true, default: false})
+  @Prop({ required: true, default: false })
   isActivated: boolean;
 
   @Prop()
   activationLink: string;
 
-  @Prop({default: null })
+  @Prop({ default: null })
   avatar: string;
 
-  @Prop({required: true, default: false})
+  @Prop({ required: true, default: false })
   isSetComment: boolean;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
 
-UserSchema.pre('save', async function(next: HookNextFunction) {
+UserSchema.pre('save', async function (next: HookNextFunction) {
   try {
     if (!this.isModified('password')) {
       return next();

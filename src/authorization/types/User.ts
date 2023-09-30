@@ -1,5 +1,5 @@
-import { Roles } from "../consts/roles";
 import { Document } from 'mongoose';
+import { Roles } from '../consts/roles';
 
 export interface User extends Document {
   name: string;

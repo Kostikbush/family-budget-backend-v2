@@ -4,7 +4,7 @@ import { Roles } from 'src/authorization/consts/roles';
 
 @ObjectType()
 export class User {
-  @Field(type => ID)
+  @Field(() => ID)
   id: string;
 
   @Field()

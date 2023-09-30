@@ -1,5 +1,5 @@
+import { ArgsType, Field } from '@nestjs/graphql';
 import { IsEmail, MinLength } from 'class-validator';
-import { Field, ArgsType } from '@nestjs/graphql';
 import { Roles } from '../consts/roles';
 
 @ArgsType()
@@ -11,7 +11,7 @@ export class UserArgs {
   @Field({ nullable: false })
   @MinLength(6)
   password: string;
-  
+
   @Field({ nullable: false })
   @IsEmail()
   @MinLength(4)
@@ -21,7 +21,7 @@ export class UserArgs {
   @Field(() => [Roles])
   @MinLength(1)
   role: Roles[];
-  
+
   @Field({ nullable: false })
   @Field(() => Boolean)
   isActivated: boolean;
