@@ -1,0 +1,30 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  id: ID!
+  name: String!
+  role: [Roles!]!
+  email: String!
+  password: String!
+  _id: String!
+  isActivated: Boolean!
+  activationLink: String!
+  avatar: String!
+  isSetComment: Boolean!
+}
+
+enum Roles {
+  ADMIN
+  VIP_USER
+  USER
+}
+
+type Query {
+  getHello: String!
+}
+
+type Mutation {
+  registration(name: String!, password: String!, email: String!, role: [Roles!]!, isActivated: Boolean!, activationLink: String, avatar: String, isSetComment: Boolean!): User!
+}
