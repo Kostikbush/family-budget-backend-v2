@@ -1,38 +1,32 @@
-import { ArgsType, Field } from '@nestjs/graphql';
-import { IsEmail, MinLength } from 'class-validator';
-import { Roles } from '../consts/roles';
+import { Field, InputType } from '@nestjs/graphql';
+import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
+import { ErrorText } from 'src/authorization/consts/error-text';
 
-@ArgsType()
-export class UserArgs {
+@InputType()
+export class UserRegistrationInput {
+  @IsNotEmpty({ message: ErrorText.ERROR_NAME })
+  @MinLength(3, { message: `${ErrorText.ERROR_NAME}3` })
   @Field({ nullable: false })
-  @MinLength(3)
-  name: string;
+  readonly name: string;
 
+  @MinLength(6, { message: `${ErrorText.ERROR_PASSWORD}6` })
   @Field({ nullable: false })
-  @MinLength(6)
-  password: string;
+  readonly password: string;
 
+  @IsNotEmpty({ message: ErrorText.ERROR_EMAIL })
+  @IsEmail({}, { message: ErrorText.ERROR_EMAIL })
   @Field({ nullable: false })
-  @IsEmail()
-  @MinLength(4)
-  email: string;
+  readonly email: string;
+}
 
+@InputType()
+export class UserLoginInput {
+  @MinLength(6, { message: `${ErrorText.ERROR_PASSWORD}6` })
   @Field({ nullable: false })
-  @Field(() => [Roles])
-  @MinLength(1)
-  role: Roles[];
+  readonly password: string;
 
+  @IsNotEmpty({ message: ErrorText.ERROR_EMAIL })
+  @IsEmail({}, { message: ErrorText.ERROR_EMAIL })
   @Field({ nullable: false })
-  @Field(() => Boolean)
-  isActivated: boolean;
-
-  @Field({ nullable: true })
-  activationLink: string;
-
-  @Field({ nullable: true })
-  avatar: string;
-
-  @Field({ nullable: false })
-  @Field(() => Boolean)
-  isSetComment: boolean;
+  readonly email: string;
 }

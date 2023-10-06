@@ -1,19 +1,24 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { AuthorizationService } from './authorization.service';
-import { UserArgs } from './dto/registrationUser.args';
-import { User } from './entitys/user.entity';
+import { UserLoginInput, UserRegistrationInput } from './dto/registrationUser.args';
+import { ReturnRegUser } from './entitys/user.entity';
 
 @Resolver()
 export class AuthorizationResolver {
   constructor(private authorizationService: AuthorizationService) {}
 
-  @Query(() => String)
+  @Query(() => String, { name: 'init' })
   async getHello(): Promise<string> {
     return 'HELLO WORLD';
   }
 
-  @Mutation(() => User)
-  async registration(@Args() args: UserArgs): Promise<User> {
+  @Mutation(() => ReturnRegUser, { name: 'registration' })
+  async registration(@Args('args') args: UserRegistrationInput): Promise<ReturnRegUser> {
     return this.authorizationService.registration(args);
+  }
+
+  @Mutation(() => ReturnRegUser, { name: 'login' })
+  async login(@Args('args') args: UserLoginInput): Promise<ReturnRegUser> {
+    return this.authorizationService.login(args);
   }
 }

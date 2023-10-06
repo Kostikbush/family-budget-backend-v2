@@ -3,8 +3,11 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import * as bcrypt from 'bcrypt';
 import { Model } from 'mongoose';
+import { v4 as uuidv4 } from 'uuid';
+import { Roles } from './consts/roles';
+import { UserLoginInput, UserRegistrationInput } from './dto/registrationUser.args';
+import { ReturnRegUser } from './entitys/user.entity';
 import { User } from './entitys/user.schema';
-import { User as UserType } from './types/User';
 
 @Injectable()
 export class AuthorizationService {
@@ -14,8 +17,9 @@ export class AuthorizationService {
     private jwtService: JwtService,
   ) {}
 
-  async registration(args: Omit<User, '_id' | 'id'>): Promise<User> {
+  async registration(args: UserRegistrationInput): Promise<ReturnRegUser> {
     const { email, password } = args;
+
     const user = await this.userModel.findOne({ email });
 
     if (user) {
@@ -23,14 +27,39 @@ export class AuthorizationService {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const createdUser = new this.userModel({ ...args, password: hashedPassword });
+    const id = uuidv4();
+
+    const createdUser = new this.userModel({
+      ...args,
+      password: hashedPassword,
+      id: id,
+      avatar: null,
+      isSetComment: false,
+      role: Roles.USER,
+    });
+
+    const token = this.jwtService.sign({ id: createdUser.id });
     await createdUser.save();
-    return createdUser;
+
+    return { user: createdUser, token: token };
   }
-  async login() {}
-  sanitizeUser(user: UserType) {
-    const sanitized = user.toObject();
-    delete sanitized['password'];
-    return sanitized;
+
+  async login(args: UserLoginInput): Promise<ReturnRegUser> {
+    const { email, password } = args;
+
+    const findUser = await this.userModel.findOne({ email });
+
+    if (!findUser) {
+      throw new HttpException('Пользователь не найден', HttpStatus.BAD_REQUEST);
+    }
+
+    const comparePassword = await bcrypt.compare(findUser.password, password);
+    const sc = await bcrypt.compare('dWCASDC', findUser.password);
+    console.log(comparePassword, sc);
+    if (!comparePassword) {
+      throw new HttpException('Пароль неверный', HttpStatus.BAD_REQUEST);
+    }
+
+    return { user: findUser, token: findUser.password };
   }
 }
