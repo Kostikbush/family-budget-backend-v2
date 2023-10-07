@@ -40,7 +40,7 @@ export class AuthorizationService {
 
     const token = this.jwtService.sign({ id: createdUser.id });
     await createdUser.save();
-
+    console.log(token);
     return { user: createdUser, token: token };
   }
 
@@ -53,9 +53,8 @@ export class AuthorizationService {
       throw new HttpException('Пользователь не найден', HttpStatus.BAD_REQUEST);
     }
 
-    const comparePassword = await bcrypt.compare(findUser.password, password);
-    const sc = await bcrypt.compare('dWCASDC', findUser.password);
-    console.log(comparePassword, sc);
+    const comparePassword = await bcrypt.compare(password, findUser.password);
+
     if (!comparePassword) {
       throw new HttpException('Пароль неверный', HttpStatus.BAD_REQUEST);
     }
