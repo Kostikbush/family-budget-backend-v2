@@ -31,6 +31,9 @@ export class UserEntity {
   @Field(() => Boolean, { defaultValue: false, nullable: false })
   @IsNotEmpty()
   isSetComment: boolean;
+
+  @Field({nullable: false})
+  dateCreate: string;
 }
 
 @ObjectType()

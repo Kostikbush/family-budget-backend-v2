@@ -28,7 +28,8 @@ export class AuthorizationService {
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const id = uuidv4();
-
+    const date = new Date();
+    const dateStr = `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`
     const createdUser = new this.userModel({
       ...args,
       password: hashedPassword,
@@ -36,6 +37,7 @@ export class AuthorizationService {
       avatar: null,
       isSetComment: false,
       role: Roles.USER,
+      dateCreate: dateStr
     });
 
     const token = this.jwtService.sign({ id: createdUser.id });

@@ -5,11 +5,11 @@ import { ErrorText } from 'src/authorization/consts/error-text';
 @InputType()
 export class UserRegistrationInput {
   @IsNotEmpty({ message: ErrorText.ERROR_NAME })
-  @MinLength(3, { message: `${ErrorText.ERROR_NAME}3` })
+  @MinLength(3, { message: `${ErrorText.ERROR_NAME}` })
   @Field({ nullable: false })
   readonly name: string;
 
-  @MinLength(6, { message: `${ErrorText.ERROR_PASSWORD}6` })
+  @MinLength(6, { message: `${ErrorText.ERROR_PASSWORD}` })
   @Field({ nullable: false })
   readonly password: string;
 
@@ -21,7 +21,7 @@ export class UserRegistrationInput {
 
 @InputType()
 export class UserLoginInput {
-  @MinLength(6, { message: `${ErrorText.ERROR_PASSWORD}6` })
+  @MinLength(6, { message: `${ErrorText.ERROR_PASSWORD}` })
   @Field({ nullable: false })
   readonly password: string;
 

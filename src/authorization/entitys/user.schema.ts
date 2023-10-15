@@ -28,6 +28,9 @@ export class User {
 
   @Prop({ required: true, default: false })
   isSetComment: boolean;
+
+  @Prop({required: true})
+  dateCreate: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
