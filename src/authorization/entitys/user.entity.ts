@@ -32,7 +32,7 @@ export class UserEntity {
   @IsNotEmpty()
   isSetComment: boolean;
 
-  @Field({nullable: false})
+  @Field({ nullable: false })
   dateCreate: string;
 }
 
