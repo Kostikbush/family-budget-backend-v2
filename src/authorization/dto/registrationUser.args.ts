@@ -30,3 +30,11 @@ export class UserLoginInput {
   @Field({ nullable: false })
   readonly email: string;
 }
+
+@InputType()
+export class UserGetInput {
+  @IsNotEmpty({ message: ErrorText.ERROR_EMAIL })
+  @IsEmail({}, { message: ErrorText.ERROR_EMAIL })
+  @Field({ nullable: false })
+  readonly email: string;
+}

@@ -2,6 +2,7 @@ import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
 
 import { Roles } from 'src/authorization/consts/roles';
+import { BudgetEntity } from 'src/budget/entitys/budget.entity';
 
 @ObjectType()
 export class UserEntity {
@@ -43,4 +44,7 @@ export class ReturnRegUser {
 
   @Field()
   token: string;
+
+  @Field(() => BudgetEntity)
+  budget: BudgetEntity;
 }

@@ -1,11 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Roles } from '../consts/roles';
 
-export interface HookNextFunction {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (error?: Error): any;
-}
-
 @Schema()
 export class User {
   @Prop({ required: true })
@@ -34,16 +29,3 @@ export class User {
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
-
-// UserSchema.pre('save', async function (next: HookNextFunction) {
-//   try {
-//     if (!this.isModified('password')) {
-//       return next();
-//     }
-//     const hashed = await bcrypt.hash(this['password'], 10);
-//     this['password'] = hashed;
-//     return next();
-//   } catch (err) {
-//     return next(err);
-//   }
-// });
