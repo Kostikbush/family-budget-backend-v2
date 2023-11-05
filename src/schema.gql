@@ -85,7 +85,7 @@ type Mutation {
 
 type Query {
   getBudget(args: BudgetCreateInput!): ReturnBudget!
-  init: String!
+  getUser(args: UserGetInput!): ReturnRegUser!
 }
 
 type ReturnBudget {
@@ -94,7 +94,6 @@ type ReturnBudget {
 
 type ReturnRegUser {
   budget: BudgetEntity!
-  token: String!
   user: UserEntity!
 }
 
@@ -113,6 +112,10 @@ type UserEntity {
   name: String!
   password: String!
   role: [Roles!]!
+}
+
+input UserGetInput {
+  id: String!
 }
 
 input UserLoginInput {

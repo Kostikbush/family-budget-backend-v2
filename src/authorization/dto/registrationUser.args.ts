@@ -33,8 +33,7 @@ export class UserLoginInput {
 
 @InputType()
 export class UserGetInput {
-  @IsNotEmpty({ message: ErrorText.ERROR_EMAIL })
-  @IsEmail({}, { message: ErrorText.ERROR_EMAIL })
+  @IsNotEmpty({ message: ErrorText.IS_NOT_EMPTY })
   @Field({ nullable: false })
-  readonly email: string;
+  readonly id: string;
 }

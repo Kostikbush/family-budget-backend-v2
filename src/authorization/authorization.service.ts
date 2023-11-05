@@ -20,16 +20,16 @@ export class AuthorizationService {
   ) {}
 
   async getUser(args: UserGetInput): Promise<ReturnRegUser> {
-    const { email } = args;
+    const { id } = args;
 
-    const findUser = await this.userModel.findOne({ email });
+    const findUser = await this.userModel.findOne({ id });
 
     if (!findUser) {
       throw new HttpException('Пользователь не найден', HttpStatus.BAD_REQUEST);
     }
-    const budget = await this.budgetService.getBudget({ id: findUser.id });
+    const budget = await this.budgetService.getBudget({ id });
 
-    return { budget: budget.budget, user: findUser, token: findUser.password };
+    return { budget: budget.budget, user: findUser };
   }
 
   async registration(args: UserRegistrationInput): Promise<ReturnRegUser> {
@@ -55,9 +55,8 @@ export class AuthorizationService {
       dateCreate: dateStr,
     });
     const budget = await this.budgetService.createBudget({ id });
-    const token = this.jwtService.sign({ id: createdUser.id });
     await createdUser.save();
-    return { budget: budget.budget, user: createdUser, token: token };
+    return { budget: budget.budget, user: createdUser };
   }
 
   async login(args: UserLoginInput): Promise<ReturnRegUser> {
@@ -75,6 +74,6 @@ export class AuthorizationService {
       throw new HttpException('Пароль неверный', HttpStatus.BAD_REQUEST);
     }
     const budget = await this.budgetService.getBudget({ id: findUser.id });
-    return { budget: budget.budget, user: findUser, token: findUser.password };
+    return { budget: budget.budget, user: findUser };
   }
 }

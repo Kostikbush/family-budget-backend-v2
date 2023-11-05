@@ -42,9 +42,6 @@ export class ReturnRegUser {
   @Field(() => UserEntity)
   user: UserEntity;
 
-  @Field()
-  token: string;
-
   @Field(() => BudgetEntity)
   budget: BudgetEntity;
 }

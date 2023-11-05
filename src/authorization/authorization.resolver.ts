@@ -7,11 +7,6 @@ import { ReturnRegUser } from './entitys/user.entity';
 export class AuthorizationResolver {
   constructor(private authorizationService: AuthorizationService) {}
 
-  @Query(() => String, { name: 'init' })
-  async getUser(args: UserGetInput): Promise<ReturnRegUser> {
-    return await this.authorizationService.getUser(args);
-  }
-
   @Mutation(() => ReturnRegUser, { name: 'registration' })
   async registration(@Args('args') args: UserRegistrationInput): Promise<ReturnRegUser> {
     return this.authorizationService.registration(args);
@@ -20,5 +15,10 @@ export class AuthorizationResolver {
   @Mutation(() => ReturnRegUser, { name: 'login' })
   async login(@Args('args') args: UserLoginInput): Promise<ReturnRegUser> {
     return this.authorizationService.login(args);
+  }
+
+  @Query(() => ReturnRegUser, { name: 'getUser' })
+  async getUser(@Args('args') args: UserGetInput): Promise<ReturnRegUser> {
+    return this.authorizationService.getUser(args);
   }
 }
