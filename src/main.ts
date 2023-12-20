@@ -8,7 +8,7 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe());
   app.enableCors({
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Access-Control-Request-Headers'],
     origin: [
       'http://localhost:3000',
       'https://localhost:3000/',
@@ -17,6 +17,8 @@ async function bootstrap() {
       'https://user321990721-ymmcqhsg.wormhole.vk-apps.com',
       'https://user321990721-cwikbaak.wormhole.vk-apps.com',
       'https://user321990721-mbdtheci.wormhole.vk-apps.com',
+      'http://127.0.0.1:5500',
+      'http://127.0.0.1:5500/',
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,

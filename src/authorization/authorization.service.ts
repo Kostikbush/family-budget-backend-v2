@@ -1,5 +1,4 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import * as bcrypt from 'bcrypt';
 import { Model } from 'mongoose';
@@ -15,7 +14,6 @@ export class AuthorizationService {
   constructor(
     @InjectModel('User')
     private userModel: Model<User>,
-    private jwtService: JwtService,
     private budgetService: BudgetService,
   ) {}
 
